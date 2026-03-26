@@ -1,0 +1,6 @@
+customer_id,signup_date,segment,lifetime_value,tenure
+C001,2023-01-05,Gold,5000,12
+C002,05/01/2023,gold,,8
+C003,2023/01/07,GOLD,3000,6
+C003,07-01-2023,Premium,3000,6
+C004,2023-01-10,Silver,1500,3
