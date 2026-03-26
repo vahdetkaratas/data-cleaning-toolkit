@@ -6,7 +6,7 @@ All notable changes to the Data Cleaning Toolkit are documented here.
 
 ## [Unreleased]
 
-- **Docs:** VPS deploy guide (`DEPLOYMENT_ROADMAP.md`) documents **Caddy** as the primary reverse proxy (automatic HTTPS); **Nginx** is optional. README and decision record aligned.
+- **Docs:** VPS deploy guide (`DEPLOYMENT_ROADMAP.md`) documents **Caddy** as the primary reverse proxy (automatic HTTPS); **Nginx** is optional. README and decision record aligned. Deployment guide is **English** only.
 
 ---
 

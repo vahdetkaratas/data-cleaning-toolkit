@@ -1,57 +1,57 @@
-# VPS’te Deploy Roadmap — Adım Adım
+# VPS deployment roadmap — step by step
 
-Kendi domain’inle Data Cleaning Toolkit’i VPS’te yayına almak için sıfırdan rehber. **Docker**, **docker-compose** ve **Caddy** (ters vekil + otomatik HTTPS) kullanıyoruz; deneyim gerektirmez, komutları sırayla uygulaman yeterli.
+Deploy the Data Cleaning Toolkit on your own VPS with your domain from scratch. This guide uses **Docker**, **docker-compose**, and **Caddy** (reverse proxy + automatic HTTPS). No prior experience required—run the commands in order.
 
-Bu depodaki `docker-compose.yml` uygulamayı yalnızca **8501** portunda yayınlar. Dışarıdan domain ve HTTPS için **Caddy** 80/443 üzerinden içerideki **127.0.0.1:8501** adresine yönlendirir.
-
----
-
-## Ne Yapacağız (Özet)
-
-1. VPS’e **SSH** ile bağlanacağız.
-2. Sunucuya **Docker** ve **Docker Compose** kuracağız.
-3. Projeyi VPS’e **kopyalayıp** Docker ile **çalıştıracağız**.
-4. **Caddy** kurup domain’i **8501**’e yönlendireceğiz (reverse proxy; **Let’s Encrypt otomatik**).
-5. **Domain’i** VPS’in IP’sine yönlendireceğiz (DNS).
-
-Böylece `https://YOUR_DOMAIN` (ör. `https://app.example.com`) ile uygulama açılır.
+The `docker-compose.yml` in this repo publishes the app only on port **8501**. For a public domain and HTTPS, **Caddy** listens on 80/443 and forwards traffic to **127.0.0.1:8501** inside the server.
 
 ---
 
-## 0. Hazırlık (Bilgisayarında)
+## What we will do (overview)
 
-- **VPS bilgileri:** IP adresi (örn. `203.0.113.10`), kullanıcı adı (çoğunlukla `root`), şifre veya SSH key.
-- **Domain:** Bir domain’in olmalı ve DNS’ini yönetebilmelisin (A kaydı ekleyeceğiz).
-- **SSH istemcisi:**
-  - **Windows:** PowerShell veya Windows Terminal (OpenSSH varsayılan gelir). Alternatif: [PuTTY](https://www.putty.org/).
-  - **Mac/Linux:** Terminal’de `ssh` komutu vardır.
+1. Connect to the VPS with **SSH**.
+2. Install **Docker** and **Docker Compose** on the server.
+3. **Copy** the project to the VPS and **run** it with Docker.
+4. Install **Caddy** and route your domain to **8501** (reverse proxy; **Let’s Encrypt** is automatic).
+5. Point your **domain** at the VPS IP (DNS).
+
+Then the app is available at `https://YOUR_DOMAIN` (e.g. `https://app.example.com`).
 
 ---
 
-## 1. VPS’e İlk Bağlantı (SSH)
+## 0. Prerequisites (on your computer)
 
-### Windows (PowerShell veya Terminal)
+- **VPS:** IP address (e.g. `203.0.113.10`), username (often `root`), password or SSH key.
+- **Domain:** A domain you control and can edit DNS for (we will add an A record).
+- **SSH client:**
+  - **Windows:** PowerShell or Windows Terminal (OpenSSH is usually preinstalled). Alternative: [PuTTY](https://www.putty.org/).
+  - **Mac/Linux:** The `ssh` command in Terminal.
+
+---
+
+## 1. First SSH connection to the VPS
+
+### Windows (PowerShell or Terminal)
 
 ```powershell
-ssh root@VPS_IP_ADRESI
+ssh root@YOUR_VPS_IP
 ```
 
-Örnek: `ssh root@203.0.113.10`  
-Şifre sorarsa VPS sağlayıcıdan aldığın şifreyi yaz (yazarken görünmez, Enter’a bas).
+Example: `ssh root@203.0.113.10`  
+If prompted for a password, use the one from your provider (input is hidden; press Enter when done).
 
 ### Mac / Linux
 
 ```bash
-ssh root@VPS_IP_ADRESI
+ssh root@YOUR_VPS_IP
 ```
 
-Bağlandığında komut satırı `root@sunucuadi:~#` gibi bir şeye dönüşür. Artık komutları **VPS üzerinde** çalıştırıyorsun.
+After connecting, your prompt should look like `root@hostname:~#`. You are now running commands **on the VPS**.
 
 ---
 
-## 2. Sistemi Güncellemek
+## 2. Update the system
 
-Bağlandıktan sonra sırayla:
+After you connect, run:
 
 **Debian / Ubuntu:**
 
@@ -65,15 +65,15 @@ apt update && apt upgrade -y
 dnf update -y
 ```
 
-Bu rehberde komutlar **Debian/Ubuntu** için yazıldı. Başka dağıtım kullanıyorsan “Docker install [dağıtım adı]” diye aratıp ilk adımı ona göre değiştirirsin.
+The steps below are written for **Debian/Ubuntu**. On another distribution, search for “Docker install [distro name]” and adjust the Docker section accordingly.
 
 ---
 
-## 3. Docker Kurulumu
+## 3. Install Docker
 
-Docker, uygulamayı “konteyner” içinde çalıştırır; sunucuya doğrudan Python kurmadan aynı ortamı her yerde kullanırsın.
+Docker runs the app in a container so you do not install Python directly on the host and get the same environment everywhere.
 
-### 3.1 Docker’ı Yükle (Debian/Ubuntu)
+### 3.1 Install Docker (Debian/Ubuntu)
 
 ```bash
 apt install -y ca-certificates curl
@@ -81,31 +81,31 @@ install -m 0755 -d /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
 chmod a644 /etc/apt/keyrings/docker.asc
 
-# Ubuntu için:
+# Ubuntu:
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
-# Saf Debian için yukarıdaki satır yerine (ubuntu → debian):
+# For Debian only, replace the line above (ubuntu → debian):
 # echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 apt update
 apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
-Kurulum bitince kontrol:
+Verify:
 
 ```bash
 docker --version
 docker compose version
 ```
 
-İkisi de sürüm yazıyorsa tamam.
+Both should print a version string.
 
 ---
 
-## 4. Projeyi VPS’e Almak
+## 4. Get the project onto the VPS
 
-İki yol var: **Git ile** (tercih) veya **dosya kopyalama**.
+Two options: **Git** (preferred) or **copy files**.
 
-### Yol A: Git ile (GitHub’a attıysan)
+### Option A: Git (if the repo is on GitHub)
 
 ```bash
 apt install -y git
@@ -114,59 +114,59 @@ git clone https://github.com/your-username/data-cleaning-toolkit.git
 cd data-cleaning-toolkit
 ```
 
-`your-username` kısmını kendi GitHub kullanıcı veya organizasyon adınla değiştir; repo adını değiştirdiysen URL’yi ona göre güncelle. Repo özel ise token ile clone etmen gerekir; public ise bu yeterli.
+Replace `your-username` with your GitHub user or organization; update the URL if the repo name differs. Use a personal access token if the repo is private; for a public repo this is enough.
 
-### Yol B: Bilgisayarından Dosya Göndermek
+### Option B: Copy from your computer
 
-Bilgisayarında proje klasörü açıkken (PowerShell / Terminal):
+From your project folder (PowerShell / Terminal):
 
 ```bash
-scp -r . root@VPS_IP_ADRESI:/opt/data-cleaning-toolkit
+scp -r . root@YOUR_VPS_IP:/opt/data-cleaning-toolkit
 ```
 
-VPS’te:
+On the VPS:
 
 ```bash
 cd /opt/data-cleaning-toolkit
 ```
 
-Proje burada olmalı: `Dockerfile`, `docker-compose.yml`, `src/`, `data/`, `requirements.txt` vs.
+You should see `Dockerfile`, `docker-compose.yml`, `src/`, `data/`, `requirements.txt`, etc.
 
 ---
 
-## 5. Docker ile Uygulamayı Çalıştırmak
+## 5. Run the app with Docker
 
-VPS’te proje dizinindeyken:
+On the VPS, from the project directory:
 
 ```bash
 cd /opt/data-cleaning-toolkit
 docker compose up -d --build
 ```
 
-- `--build`: Image’ı projeden yeniden build eder.  
-- `-d`: Arka planda çalışır.
+- `--build` rebuilds the image from the project.  
+- `-d` runs in the background.
 
-Kontrol:
+Check:
 
 ```bash
 docker compose ps
 ```
 
-`app` servisi “Up” görünmeli. Şimdilik tarayıcıda şu adresi dene:
+The `app` service should show **Up**. In a browser, try:
 
-`http://VPS_IP_ADRESI:8501`
+`http://YOUR_VPS_IP:8501`
 
-Açılıyorsa Streamlit çalışıyordur. Üretimde **8501**’i internete açmak yerine yalnızca **Caddy** üzerinden domain ile vereceğiz.
+If it loads, Streamlit is running. In production, **do not** expose **8501** to the internet directly—only via **Caddy** on your domain.
 
 ---
 
-## 6. Caddy Kurulumu (Reverse proxy + HTTPS)
+## 6. Install Caddy (reverse proxy + HTTPS)
 
-**Caddy**, 80 ve 443’ü dinler; istekleri içerideki Streamlit’e (`127.0.0.1:8501`) iletir ve geçerli DNS olduğunda **Let’s Encrypt** sertifikasını **otomatik** alır ve yeniler (ayrıca Certbot gerekmez).
+**Caddy** listens on ports 80 and 443, forwards to Streamlit at `127.0.0.1:8501`, and when DNS is correct it **automatically** obtains and renews **Let’s Encrypt** certificates (no Certbot needed on this path).
 
-### 6.1 Caddy’yi yükle (Debian / Ubuntu)
+### 6.1 Install Caddy (Debian / Ubuntu)
 
-[Caddy resmi kurulum](https://caddyserver.com/docs/install) ile uyumlu özet:
+Summary aligned with the [official Caddy install docs](https://caddyserver.com/docs/install):
 
 ```bash
 apt install -y debian-keyring debian-archive-keyring apt-transport-https curl
@@ -176,13 +176,13 @@ apt update
 apt install -y caddy
 ```
 
-### 6.2 Caddyfile oluştur
+### 6.2 Create the Caddyfile
 
 ```bash
 nano /etc/caddy/Caddyfile
 ```
 
-Var olan örnek içeriği silip aşağıdakine benzer bir blok yaz; **`YOUR_DOMAIN`** yerine gerçek host adını yaz (ör. `app.example.com`):
+Remove any default sample content and add a block like below; replace **`YOUR_DOMAIN`** with your real hostname (e.g. `app.example.com`):
 
 ```caddyfile
 YOUR_DOMAIN {
@@ -193,9 +193,9 @@ YOUR_DOMAIN {
 }
 ```
 
-Kaydet: `Ctrl+O`, Enter, çık: `Ctrl+X`.
+Save: `Ctrl+O`, Enter, exit: `Ctrl+X`.
 
-### 6.3 Yapılandırmayı uygula
+### 6.3 Apply configuration
 
 ```bash
 caddy validate --config /etc/caddy/Caddyfile
@@ -203,35 +203,35 @@ systemctl reload caddy
 systemctl enable caddy
 ```
 
-`validate` hata vermezse devam. Sorun olursa `journalctl -u caddy -e` ile günlüğe bak.
+If `validate` succeeds, continue. On errors, check logs: `journalctl -u caddy -e`.
 
-**HTTPS:** A kaydı DNS’te VPS IP’sine işaret ettikten ve yayıldıktan sonra Caddy ilk istekte sertifikayı kendisi alır. DNS hazır değilse sertifika aşamasında hata görebilirsin; DNS’i doğrulayıp `systemctl reload caddy` yeterli olabilir.
-
----
-
-## 7. Domain’i VPS’e Yönlendirmek (DNS)
-
-Domain sağlayıcında (GoDaddy, Namecheap, Cloudflare, vs.) DNS ayarlarına gir.
-
-- **Kayıt türü:** A  
-- **Ad (Host):** `app` (veya `@` apex için; sağlayıcıya göre değişir)  
-- **Değer (Value):** VPS’in **IP adresi**  
-- TTL: 300 veya 3600
-
-Örnek: `app.example.com` için host `app`, value `203.0.113.10`.  
-Kaydı kaydedip birkaç dakika–saat bekle (DNS yayılımı). Sonra tarayıcıda `http://YOUR_DOMAIN` dene; Caddy arkada 8501’e proxy’ler. Uygulama çalışmıyorsa **502** benzeri bir hata görebilirsin; o zaman `docker compose ps` ile konteyneri kontrol et.
+**HTTPS:** After the A record points to the VPS and has propagated, Caddy will request the certificate on first use. If DNS is not ready yet, you may see certificate errors; verify DNS and run `systemctl reload caddy` again.
 
 ---
 
-## 8. HTTPS notu (Caddy ile)
+## 7. Point your domain at the VPS (DNS)
 
-Bu yolda **Certbot kurmana gerek yok**: Caddy, domain doğru çözümlenince **Let’s Encrypt** kullanır. Tarayıcıda `https://YOUR_DOMAIN` açılıyorsa tamam.
+At your registrar or DNS host (GoDaddy, Namecheap, Cloudflare, etc.), edit DNS:
+
+- **Type:** A  
+- **Host / name:** `app` (or `@` for apex—depends on the provider)  
+- **Value:** your VPS **public IP**  
+- TTL: 300 or 3600
+
+Example: for `app.example.com`, host `app`, value `203.0.113.10`.  
+Save and wait for propagation (minutes to hours). Then try `http://YOUR_DOMAIN` in a browser; Caddy proxies to 8501. If the app is down you might see a **502**—check `docker compose ps`.
 
 ---
 
-## 9. Güvenlik Duvarı (Firewall)
+## 8. HTTPS note (Caddy)
 
-Sadece gerekli portları aç:
+On this path you **do not need Certbot**: Caddy uses **Let’s Encrypt** when the domain resolves correctly. If `https://YOUR_DOMAIN` loads in the browser, you are done.
+
+---
+
+## 9. Firewall
+
+Open only what you need:
 
 ```bash
 ufw allow 22
@@ -240,28 +240,28 @@ ufw allow 443
 ufw enable
 ```
 
-22: SSH, 80: HTTP (ACME / yönlendirme), 443: HTTPS. **8501’i dışarı açma**; yalnızca **Caddy** içeriden `127.0.0.1:8501`’e bağlansın.
+22: SSH, 80: HTTP (ACME / redirects), 443: HTTPS. **Do not** open **8501** publicly—only **Caddy** should reach `127.0.0.1:8501` from inside the server.
 
 ---
 
-## 10. Sunucu Yeniden Açılınca Uygulamanın Başlaması
+## 10. Persistence after reboot
 
-Docker Compose’ta `restart: unless-stopped` kullandık; VPS restart olsa bile konteyner tekrar ayağa kalkar. Caddy de servis olarak açılışta gelir (`systemctl enable caddy`).
+`docker-compose.yml` uses `restart: unless-stopped`, so the container comes back after a VPS reboot. Caddy is enabled as a service (`systemctl enable caddy`).
 
-Kontrol için:
+Check:
 
 ```bash
 docker compose ps
 systemctl status caddy --no-pager
 ```
 
-“Up” / `active` görünüyorsa tamam.
+You want the container **Up** and Caddy **active**.
 
 ---
 
-## 11. Güncelleme (Yeni Kod Attığında)
+## 11. Updating when you push new code
 
-Git kullandıysan:
+If you use Git:
 
 ```bash
 cd /opt/data-cleaning-toolkit
@@ -269,24 +269,24 @@ git pull
 docker compose up -d --build
 ```
 
-Dosya ile gönderdiysen yine `scp` ile atıp aynı `docker compose up -d --build` komutunu çalıştır.
+If you deploy with `scp`, upload changes and run the same `docker compose up -d --build`.
 
 ---
 
-## 12. Sorun Giderme
+## 12. Troubleshooting
 
-| Sorun | Ne Yapmalı |
-|--------|-------------|
-| `http://IP:8501` açılmıyor | `docker compose ps` ve `docker compose logs -f` ile konteyner çalışıyor mu, hata var mı bak. |
-| Domain açılmıyor | DNS: `ping YOUR_DOMAIN` veya `dig YOUR_DOMAIN` ile IP doğru mu. **Caddy:** `caddy validate --config /etc/caddy/Caddyfile`, `journalctl -u caddy -e`. |
-| 502 Bad Gateway | Caddy, 8501’e ulaşamıyor. VPS içinde `curl -sS http://127.0.0.1:8501` çalışıyor mu dene; `docker compose ps` ile app’in Up olduğundan emin ol. |
-| HTTPS / sertifika hatası | A kaydı VPS’e işaret mi, 80/443 firewall’da açık mı; bir süre bekle, sonra `systemctl reload caddy`. |
+| Issue | What to do |
+|--------|------------|
+| `http://IP:8501` does not load | `docker compose ps` and `docker compose logs -f`—is the container running, any errors? |
+| Domain does not resolve | DNS: `ping YOUR_DOMAIN` or `dig YOUR_DOMAIN`—does it show the VPS IP? **Caddy:** `caddy validate --config /etc/caddy/Caddyfile`, `journalctl -u caddy -e`. |
+| 502 Bad Gateway | Caddy cannot reach 8501. On the VPS, try `curl -sS http://127.0.0.1:8501`; confirm `docker compose ps` shows `app` **Up**. |
+| HTTPS / certificate errors | Confirm A record to VPS, ports 80/443 open; wait for DNS, then `systemctl reload caddy`. |
 
 ---
 
-## 13. Özet Komut Listesi (Kopyala-Yapıştır)
+## 13. Command cheat sheet (copy-paste)
 
-VPS’e ilk kez kurarken (Debian/Ubuntu, root) — Docker blokunu §3’teki gibi tam ekle; ardından:
+First-time setup on Debian/Ubuntu as **root**—add the full Docker block from **§3** before this; then:
 
 ```bash
 apt install -y git debian-keyring debian-archive-keyring apt-transport-https curl
@@ -296,25 +296,25 @@ apt update && apt install -y caddy
 cd /opt && git clone https://github.com/your-username/data-cleaning-toolkit.git
 cd data-cleaning-toolkit
 docker compose up -d --build
-# Sonra /etc/caddy/Caddyfile içinde YOUR_DOMAIN + reverse_proxy 127.0.0.1:8501 (§6.2)
+# Then edit /etc/caddy/Caddyfile: YOUR_DOMAIN + reverse_proxy 127.0.0.1:8501 (§6.2)
 caddy validate --config /etc/caddy/Caddyfile && systemctl reload caddy
 ufw allow 22,80,443 && ufw enable
 ```
 
-Domain’i DNS’te VPS IP’sine A kaydı ile yönlendirmeyi unutma.
+Do not forget the A record in DNS pointing to the VPS IP.
 
 ---
 
-## Proje İçindeki Deploy Dosyaları
+## Deploy assets in this repository
 
-- **Dockerfile:** Uygulamanın Docker image tanımı.  
-- **docker-compose.yml:** Tek komutla build + çalıştırma (port **8501**).  
-- **Caddyfile:** Sunucuda `/etc/caddy/Caddyfile`; örnek blok bu rehberin **§6.2** bölümünde.
+- **Dockerfile:** Image definition for the app.  
+- **docker-compose.yml:** Build and run (port **8501**).  
+- **Caddyfile:** Lives on the server at `/etc/caddy/Caddyfile`; see **§6.2** for an example.
 
 ---
 
-## Ek (isteğe bağlı): Nginx
+## Optional: Nginx
 
-Stack’ini **Nginx** ile kurmak istersen aynı rolü görür: 80/443’te dinleyip `proxy_pass http://127.0.0.1:8501` ile Streamlit’e yönlendirirsin; HTTPS için **Certbot** (`certbot --nginx`) kullanırsın. Bu rehberin ana yolu **Caddy**’dir; Nginx yalnızca alternatif bir seçenektir.
+If you prefer **Nginx**, it can play the same role: listen on 80/443 and `proxy_pass http://127.0.0.1:8501` to Streamlit; use **Certbot** with `certbot --nginx` for TLS. The **primary** path in this guide is **Caddy**; Nginx is an alternative only.
 
-Bu roadmap’i takip edersen uygulama kendi domain’inle (HTTPS ile) VPS’te yayında olur. Takıldığın adımı yazarsan o adımı birlikte netleştirebiliriz.
+Following this guide, the app is served on your own domain over HTTPS on the VPS.

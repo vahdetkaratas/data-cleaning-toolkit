@@ -48,7 +48,7 @@ python -m streamlit run src/app.py
 
 ### Deploy on your own server (VPS)
 
-See **[docs/DEPLOYMENT_ROADMAP.md](docs/DEPLOYMENT_ROADMAP.md)** for a step-by-step guide (Turkish): SSH, **Docker**, **docker-compose** (app on port **8501**), **Caddy** as reverse proxy with automatic HTTPS, and custom domain. **Nginx** is noted only as an optional alternative at the end of that guide.
+See **[docs/DEPLOYMENT_ROADMAP.md](docs/DEPLOYMENT_ROADMAP.md)** for a step-by-step guide: SSH, **Docker**, **docker-compose** (app on port **8501**), **Caddy** as reverse proxy with automatic HTTPS, and custom domain. **Nginx** is noted only as an optional alternative at the end of that guide.
 
 ### Run tests
 
@@ -112,7 +112,7 @@ For a portfolio or demo, you can add **before/after screenshots**: e.g. the issu
 - [docs/PROJECT_DECISION_RECORD.md](docs/PROJECT_DECISION_RECORD.md) — Scope and deliverables.
 - [docs/CHANGELOG.md](docs/CHANGELOG.md) — Release notes.
 - [docs/V2_ROADMAP.md](docs/V2_ROADMAP.md) — V2 status snapshot and optional next items (core V2 scope is implemented; see CHANGELOG).
-- [docs/DEPLOYMENT_ROADMAP.md](docs/DEPLOYMENT_ROADMAP.md) — Step-by-step VPS deployment (Docker, docker-compose, **Caddy** + HTTPS; Turkish).
+- [docs/DEPLOYMENT_ROADMAP.md](docs/DEPLOYMENT_ROADMAP.md) — Step-by-step VPS deployment (Docker, docker-compose, **Caddy** + HTTPS).
 
 ## License
 
