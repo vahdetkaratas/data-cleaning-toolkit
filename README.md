@@ -48,7 +48,7 @@ python -m streamlit run src/app.py
 
 ### Deploy on your own server (VPS)
 
-See **[docs/DEPLOYMENT_ROADMAP.md](docs/DEPLOYMENT_ROADMAP.md)** for a step-by-step guide: SSH, **Docker**, **docker-compose** (app on port **8501**), **Caddy** as reverse proxy with automatic HTTPS, and custom domain. **Nginx** is noted only as an optional alternative at the end of that guide.
+See **[docs/DEPLOYMENT_ROADMAP.md](docs/DEPLOYMENT_ROADMAP.md)** — Docker, docker-compose, **Caddy** (HTTPS), optional nginx alternative.
 
 ### Run tests
 
@@ -97,21 +97,6 @@ In the app, choose **Sales (messy)** or **Customer (messy)** to try the pipeline
 - **Domain:** General tabular data. JSON/JSONL is supported with **one level** of nested-object flattening; deeply nested or highly custom structures are not the focus.
 
 ---
-
-## Portfolio / showcase
-
-For a portfolio or demo, you can add **before/after screenshots**: e.g. the issue summary (missing, duplicates, invalid formats, outliers) and the cleaned data preview + download. Run the app, pick a demo dataset, run "Detect and clean", and capture the Issue summary and Result sections.
-
----
-
-## Documentation
-
-- [docs/README.md](docs/README.md) — Documentation index.
-- [docs/SERVICE_DESIGN.md](docs/SERVICE_DESIGN.md) — Pipeline and modules.
-- [docs/IMPLEMENTATION_REFERENCE.md](docs/IMPLEMENTATION_REFERENCE.md) — Repo structure, setup, commands.
-- [docs/PROJECT_DECISION_RECORD.md](docs/PROJECT_DECISION_RECORD.md) — Scope and deliverables.
-- [docs/DEPLOYMENT_ROADMAP.md](docs/DEPLOYMENT_ROADMAP.md) — VPS deployment (Docker, docker-compose, **Caddy** + HTTPS).
-- [docs/CHANGELOG.md](docs/CHANGELOG.md) — Release notes and optional future ideas.
 
 ## License
 
