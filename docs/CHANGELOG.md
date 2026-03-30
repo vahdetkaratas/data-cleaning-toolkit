@@ -4,9 +4,13 @@ All notable changes to the Data Cleaning Toolkit are documented here.
 
 ---
 
-## [Unreleased]
+## [2.1.1] — 2026-03-30
 
-- **Docs:** VPS deploy guide (`DEPLOYMENT_ROADMAP.md`) documents **Caddy** as the primary reverse proxy (automatic HTTPS); **Nginx** is optional. README and decision record aligned. Deployment guide is **English** only.
+### Documentation
+
+- Deployment guide (`DEPLOYMENT_ROADMAP.md`) is English-only; **Caddy** primary, **Nginx** optional.
+- Removed redundant docs: `V2_ROADMAP.md` and `IMPROVEMENTS_AND_RISKS.md` (content folded into this file and `IMPLEMENTATION_REFERENCE.md`).
+- Trimmed `PROJECT_DECISION_RECORD.md`; refreshed `docs/README.md` index.
 
 ---
 
@@ -113,3 +117,14 @@ All notable changes to the Data Cleaning Toolkit are documented here.
 
 - README: problem, flow, how to run, tests, demo, limitations.
 - docs: SERVICE_DESIGN, IMPLEMENTATION_REFERENCE, PROJECT_DECISION_RECORD.
+
+---
+
+## Future ideas (not on the roadmap)
+
+Optional enhancements if you extend the project later:
+
+- PDF report export.
+- Streamlit Cloud–style one-click deploy (alternative to VPS path in `DEPLOYMENT_ROADMAP.md`).
+- Default options via config file (YAML/JSON).
+- Rotating file logs in addition to current logging.

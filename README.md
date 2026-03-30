@@ -83,7 +83,7 @@ In the app, choose **Sales (messy)** or **Customer (messy)** to try the pipeline
 ## Deliverables (what the client gets)
 
 - Cleaned dataset (CSV, Parquet, or JSON — user choice).
-- In-app **column insights**, **before/after previews**, and bullet **cleaning summary** (aligned with executed steps).
+- In-app **column insights**, **before/after previews**, and bullet **cleaning summary** (step descriptions recorded by the pipeline).
 - Data quality overview (issue summary).
 - Short cleaning report (HTML): what was found and what was fixed.
 
@@ -110,9 +110,8 @@ For a portfolio or demo, you can add **before/after screenshots**: e.g. the issu
 - [docs/SERVICE_DESIGN.md](docs/SERVICE_DESIGN.md) — Pipeline and modules.
 - [docs/IMPLEMENTATION_REFERENCE.md](docs/IMPLEMENTATION_REFERENCE.md) — Repo structure, setup, commands.
 - [docs/PROJECT_DECISION_RECORD.md](docs/PROJECT_DECISION_RECORD.md) — Scope and deliverables.
-- [docs/CHANGELOG.md](docs/CHANGELOG.md) — Release notes.
-- [docs/V2_ROADMAP.md](docs/V2_ROADMAP.md) — V2 status snapshot and optional next items (core V2 scope is implemented; see CHANGELOG).
-- [docs/DEPLOYMENT_ROADMAP.md](docs/DEPLOYMENT_ROADMAP.md) — Step-by-step VPS deployment (Docker, docker-compose, **Caddy** + HTTPS).
+- [docs/DEPLOYMENT_ROADMAP.md](docs/DEPLOYMENT_ROADMAP.md) — VPS deployment (Docker, docker-compose, **Caddy** + HTTPS).
+- [docs/CHANGELOG.md](docs/CHANGELOG.md) — Release notes and optional future ideas.
 
 ## License
 
