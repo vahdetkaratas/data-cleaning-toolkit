@@ -1,6 +1,6 @@
 # Data Cleaning Toolkit
 
-Clean messy tabular datasets (CSV, Excel, Parquet, JSON/JSONL) for analysis, dashboards, or machine learning.  
+**Streamlit** app: clean messy tabular datasets (CSV, Excel, Parquet, JSON/JSONL) for analysis, dashboards, or machine learning.  
 **Service:** Data Cleaning & Preparation.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -19,8 +19,8 @@ This app **detects** common issues and **cleans** the data with configurable rul
 ## Flow
 
 1. **Upload** one or more CSV, Excel, Parquet, or JSON files (or use built-in demo data). Multiple files are merged into one dataset.
-2. **Detect** issues: missing values, duplicates, invalid formats, inconsistent categories, potential outliers (optional: duplicate key columns; columns as date/numeric; or run "Detect only" to preview without cleaning).
-3. **Review** a compact **per-column insight** table (from detection, before cleaning), the issue summary, and cleaning options; then run clean when ready.
+2. **Detect** issues: missing values, duplicates, invalid formats, inconsistent categories, potential outliers (IQR flags in the report only — not auto-removed). Optional: duplicate key columns; columns forced as date or numeric; or **Detect only** to preview without cleaning.
+3. **Configure** cleaning: choose steps (e.g. drop duplicates, standardize categories, coerce numbers, parse dates) and **missing values**: leave as-is, drop rows, or fill with a value. **Review** the per-column **insight** table (from detection, before cleaning), the issue summary, and options; then run.
 4. **See** a **before/after sample**, a short **cleaning summary**, and optional **same-index** row samples where cells changed. **Download** cleaned data (CSV, Parquet, or JSON) and the HTML report.
 
 ---
