@@ -21,7 +21,7 @@ This app **detects** common issues and **cleans** the data with configurable rul
 1. **Upload** one or more CSV, Excel, Parquet, or JSON files (or use built-in demo data). Multiple files are merged into one dataset.
 2. **Detect** issues: missing values, duplicates, invalid formats, inconsistent categories, potential outliers (optional: duplicate key columns; columns as date/numeric; or run "Detect only" to preview without cleaning).
 3. **Review** a compact **per-column insight** table (from detection, before cleaning), the issue summary, and cleaning options; then run clean when ready.
-4. **See** a **before/after sample**, a short **cleaning summary** (step descriptions recorded by the pipeline), and optional **same-index** row samples where cells changed. **Download** cleaned data (CSV, Parquet, or JSON) and the HTML report.
+4. **See** a **before/after sample**, a short **cleaning summary**, and optional **same-index** row samples where cells changed. **Download** cleaned data (CSV, Parquet, or JSON) and the HTML report.
 
 ---
 
@@ -45,10 +45,6 @@ python -m streamlit run src/app.py
 ```
 
 (If `streamlit` is on your PATH you can use `streamlit run src/app.py` instead.) The app opens in your browser; if it asks for an email on first run, you can leave it blank and press Enter.
-
-### Deploy on your own server (VPS)
-
-See **[docs/DEPLOYMENT_ROADMAP.md](docs/DEPLOYMENT_ROADMAP.md)** — Docker, docker-compose, **Caddy** (HTTPS), optional nginx alternative.
 
 ### Run tests
 
@@ -77,15 +73,6 @@ Two demos are included (with intentional issues):
 | Customer  | `data/demo_customer/customer_messy.csv` | Duplicates, inconsistent segment, missing values |
 
 In the app, choose **Sales (messy)** or **Customer (messy)** to try the pipeline.
-
----
-
-## Deliverables (what the client gets)
-
-- Cleaned dataset (CSV, Parquet, or JSON — user choice).
-- In-app **column insights**, **before/after previews**, and bullet **cleaning summary** (step descriptions recorded by the pipeline).
-- Data quality overview (issue summary).
-- Short cleaning report (HTML): what was found and what was fixed.
 
 ---
 
