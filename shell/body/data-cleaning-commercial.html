@@ -1,0 +1,82 @@
+<section class="proj-prose">
+  <p><strong>Operational pain.</strong> Finance, RevOps, and CS teams routinely export spreadsheets and CSV snapshots that contradict each other: duplicated customer rows, collapsing date formats, free-text regions masquerading as categories, blanks where ERP rules expect numbers. Manual cleanup slows reporting cycles and hides mistakes until dashboards look “off.”</p>
+  <p>VahdetLabs scopes short preprocessing pilots that bring those exports to a repeatable baseline before BI refreshes or internal tooling handoffs—not a flashy SaaS promise, just disciplined tables.</p>
+</section>
+
+<section class="proj-section">
+  <h2>What a pilot produces</h2>
+  <div class="proj-card-grid">
+    <article class="proj-card">
+      <h3 class="proj-card-title">Agreed cleansing recipe</h3>
+      <p>Column-level allowances for trims, coercion, duplicate handling, and missing-value policy recorded up front.</p>
+    </article>
+    <article class="proj-card">
+      <h3 class="proj-card-title">Handoff-ready files</h3>
+      <p>CSV / Parquet / JSON exports whichever downstream stack prefers—with identical transforms each run.</p>
+    </article>
+    <article class="proj-card">
+      <h3 class="proj-card-title">HTML run summary</h3>
+      <p>Sharable synopsis of counts, deltas, warnings—anchors internal reviews without unlocking production databases.</p>
+    </article>
+    <article class="proj-card">
+      <h3 class="proj-card-title">Scope boundaries</h3>
+      <p>Explicit what is in/out—no stealth expansion into unmanaged MDM catalogs or enterprise workflow orchestrators without renegotiating.</p>
+    </article>
+  </div>
+</section>
+
+<section class="proj-section">
+  <h2>Standardization scope</h2>
+  <ol class="proj-steps">
+    <li class="proj-step">
+      <div class="proj-step-num" aria-hidden="true">1</div>
+      <div class="proj-step-body">
+        <h3 class="proj-step-title">Structure &amp; duplicates</h3>
+        <p>Optional business keys constrain duplicate scans; merges from multiple uploads keep provenance for reconciliation.</p>
+      </div>
+    </li>
+    <li class="proj-step">
+      <div class="proj-step-num" aria-hidden="true">2</div>
+      <div class="proj-step-body">
+        <h3 class="proj-step-title">Types &amp; formats</h3>
+        <p>Dates and numerics coerce only when instructed; outliers surface as warnings—not silent deletions unless that rule is negotiated.</p>
+      </div>
+    </li>
+    <li class="proj-step">
+      <div class="proj-step-num" aria-hidden="true">3</div>
+      <div class="proj-step-body">
+        <h3 class="proj-step-title">Categories &amp; whitespace</h3>
+        <p>Case normalization and trimming eliminate “West ” vs “west” drift feeding regional charts.</p>
+      </div>
+    </li>
+    <li class="proj-step">
+      <div class="proj-step-num" aria-hidden="true">4</div>
+      <div class="proj-step-body">
+        <h3 class="proj-step-title">Missing data policy</h3>
+        <p>Stakeholders choose between leaving gaps, pruning rows with explicit rationale, or filling with audited constants tied to KPI definitions.</p>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<section class="proj-section">
+  <h2>Collaboration rhythm</h2>
+  <div class="pitch">
+    <ul>
+      <li><strong>Discover:</strong> sample files + KPI intent + risk notes (regulated fields stay client-side).</li>
+      <li><strong>Prototype:</strong> show detection output, reconcile edge cases together, freeze the cleansing checklist.</li>
+      <li><strong>Operationalize:</strong> deliver repeatable exports plus summary HTML; train owners on rerunning or scheduling follow-on work separately.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="proj-section">
+  <h2>Commercial guardrails</h2>
+  <div class="pitch">
+    <ul>
+      <li>Not an always-on multitenant SaaS SKU—pilots intentionally bound time, datasets, environments.</li>
+      <li>Not an enterprise master-data catalogue; semantic merges across unrelated systems belong to larger programs.</li>
+      <li>Large-file ingestion, VPC placement, SSO, ticketing hooks are follow-on scopes once table discipline proves value.</li>
+    </ul>
+  </div>
+</section>

@@ -1,0 +1,29 @@
+{
+  "name": "Vahdettin Karatas",
+  "identity": "Data / ML engineer — preprocessing, validation, repeatable pipelines",
+  "location": "Czech Republic (EU)",
+  "portfolioUrl": "https://vahdetkaratas.com/",
+  "avatarUrl": "https://vahdetkaratas.com/img/face-1.jpg",
+  "technicalFocus": [
+    "Tabular data quality & preprocessing",
+    "Streamlit tooling for DQ reviews",
+    "Python / pandas workloads",
+    "Testing & reproducible notebooks",
+    "Exportable artifacts & honest limits"
+  ],
+  "reviewSectionTitle": "Review this artifact",
+  "footerLabel": "Portfolio data engineering artifact",
+  "footerTagline": "Reproducible cleaning modules, surfaced through Streamlit demos and notebooks.",
+  "socialLinks": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/vahdetkaratas",
+      "iconClass": "fab fa-github"
+    },
+    {
+      "label": "LinkedIn",
+      "href": "https://linkedin.com/in/vahdetkaratas",
+      "iconClass": "fab fa-linkedin-in"
+    }
+  ]
+}

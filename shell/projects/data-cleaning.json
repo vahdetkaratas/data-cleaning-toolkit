@@ -1,0 +1,287 @@
+{
+  "pageTitle": "Data Cleaning Toolkit — Portfolio / Data Engineering",
+  "title": "Data Cleaning Toolkit",
+  "eyebrow": "Portfolio artifact — Streamlit + reusable Python modules",
+  "summary": "A Streamlit app and supporting library code for detecting messy tabular data (CSV/Excel/Parquet/JSON), applying configurable cleanup, exporting handoff-ready files, and emitting an HTML report. Built for repeatable preprocessing—not a separate HTTP service layer in this repository.",
+  "metaDescription": "Streamlit data cleaning toolkit: upload, detect issues, configure cleaning, export CSV/Parquet/JSON and HTML reports. Pandas-first modules with tests.",
+  "heroTitle": "Tabular data quality & preprocessing",
+  "logoLine1": "Data",
+  "logoLine2": "Cleaning toolkit",
+  "themeColor": "#0a0c10",
+  "footerProjectName": "Data Cleaning Toolkit",
+  "footerProjectSub": "Streamlit GUI · reusable detect/clean/load/report · exports",
+  "heroNote": "This page is static HTML. Hands-on uploads run in the hosted Streamlit app.",
+  "stack": [
+    "Python / pandas",
+    "Streamlit",
+    "CSV · Excel · Parquet · JSON",
+    "pytest",
+    "HTML report export"
+  ],
+  "projectLinks": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/vahdetkaratas/6_data_cleaning_toolkit",
+      "external": true
+    },
+    {
+      "label": "Live Streamlit demo",
+      "href": "https://cleaning-data.vahdetkaratas.com/",
+      "external": true
+    },
+    {
+      "label": "Run locally",
+      "href": "https://github.com/vahdetkaratas/6_data_cleaning_toolkit#how-to-run",
+      "external": true
+    }
+  ],
+  "reviewLinks": [
+    {
+      "label": "Repository",
+      "href": "https://github.com/vahdetkaratas/6_data_cleaning_toolkit",
+      "external": true
+    },
+    {
+      "label": "Local setup & tests",
+      "href": "https://github.com/vahdetkaratas/6_data_cleaning_toolkit#how-to-run",
+      "external": true
+    },
+    {
+      "label": "Streamlit demo",
+      "href": "https://cleaning-data.vahdetkaratas.com/",
+      "external": true
+    }
+  ],
+  "relatedMlSystems": [],
+  "relatedDataTools": [],
+  "limitations": [
+    "~25 MB demo upload safeguard; not tuned for unmanaged enterprise-scale ingestion.",
+    "Recommended ~100k rows guidance in-app; giant files can stress browser memory.",
+    "Batch/tabular workflows only—not streaming pipelines, schedulers, or workflow orchestrators.",
+    "General-purpose heuristic cleaning—not a semantic master-data or catalog product."
+  ],
+  "profiles": {
+    "recruiter": {
+      "pageTitle": "Data Cleaning Toolkit — Data Engineering / DQ",
+      "eyebrow": "Portfolio artifact — Streamlit demo + reproducible preprocessing",
+      "summary": "I ship a practical upload → detect → clean → export loop for messy operational tables: issue detection across missing values, duplicates, parses, categorical drift, and IQR outliers (flagged outlier stats in reporting), plus notebooks that replay the offline path. Exported artifacts plus pytest cover the repeatable core.",
+      "heroNote": "Static recruiter page only. Hands-on uploads and downloads use the hosted Streamlit instance linked above.",
+      "footerProjectSub": "Proof-of-work · Streamlit demo + modular Python",
+      "projectLinks": [
+        {
+          "label": "GitHub",
+          "href": "https://github.com/vahdetkaratas/6_data_cleaning_toolkit",
+          "external": true
+        },
+        {
+          "label": "Live Streamlit demo",
+          "href": "https://cleaning-data.vahdetkaratas.com/",
+          "external": true
+        },
+        {
+          "label": "Run locally",
+          "href": "https://github.com/vahdetkaratas/6_data_cleaning_toolkit#how-to-run",
+          "external": true
+        }
+      ],
+      "reviewLinks": [
+        {
+          "label": "Repository",
+          "href": "https://github.com/vahdetkaratas/6_data_cleaning_toolkit",
+          "external": true
+        },
+        {
+          "label": "Tests (`pytest`)",
+          "href": "https://github.com/vahdetkaratas/6_data_cleaning_toolkit/blob/main/README.md#run-tests",
+          "external": true
+        },
+        {
+          "label": "Streamlit demo",
+          "href": "https://cleaning-data.vahdetkaratas.com/",
+          "external": true
+        },
+        {
+          "label": "Profile / CV",
+          "href": "https://vahdetkaratas.com/",
+          "external": true
+        }
+      ],
+      "limitations": [
+        "Demo safeguards cap uploads (~25 MB) — not unmanaged enterprise ingest.",
+        "Guidance warns above ~100k rows; brute-force gigantic tables will hit memory/time limits.",
+        "No hosted REST layer in this repo: Streamlit UX + downloadable outputs + offline notebooks.",
+        "Heuristic DQ helpers — not lineage, MDM catalogs, contracts-as-a-service platforms, or SLA-driven ETL control planes."
+      ],
+      "relatedMlSystems": [
+        {
+          "label": "Portfolio",
+          "href": "https://vahdetkaratas.com/portfolio",
+          "external": true
+        },
+        {
+          "label": "Batch scoring",
+          "href": "https://batch-scoring.vahdetlabs.com/",
+          "external": true
+        },
+        {
+          "label": "Feature store",
+          "href": "https://feature-store.vahdetlabs.com/",
+          "external": true
+        },
+        {
+          "label": "Vahdetlabs",
+          "href": "https://vahdetlabs.com/",
+          "external": true
+        },
+        {
+          "label": "Monitoring & data quality",
+          "href": "https://monitoring.vahdetlabs.com/",
+          "external": true
+        },
+        {
+          "label": "Customer churn prediction",
+          "href": "https://churn.vahdetlabs.com/",
+          "external": true
+        }
+      ],
+      "relatedDataTools": [
+        {
+          "label": "Data cleaning toolkit",
+          "href": "https://data-cleaning.vahdetlabs.com/",
+          "external": true
+        },
+        {
+          "label": "EDA report generator",
+          "href": "https://eda-report.vahdetlabs.com/",
+          "external": true
+        },
+        {
+          "label": "Forecasting demo",
+          "href": "https://forecasting.vahdetlabs.com/",
+          "external": true
+        },
+        {
+          "label": "CSV analytics",
+          "href": "https://ai-analysis.vahdetlabs.com/",
+          "external": true
+        },
+        {
+          "label": "KPI dashboard",
+          "href": "https://kpi-dashboard.vahdetlabs.com/",
+          "external": true
+        }
+      ]
+    },
+    "commercial": {
+      "pageTitle": "Operational table cleanup — repeatable preprocessing",
+      "eyebrow": "Capability overview — spreadsheets & CSV workflows",
+      "summary": "Teams waste hours normalizing sloppy exports before reporting or downstream models. A scoped preprocessing pass standardizes parses, trims duplicate rows, aligns categories where configured, prepares date/numeric coercion, fills or drops missing values per agreed rules, and outputs files plus a shareable HTML run summary—ideal for pilots and internal tooling, not turnkey SaaS.",
+      "heroNote": "Static overview only. Use the Live Streamlit demo button for the labs-hosted sandbox.",
+      "footerProjectSub": "Client overview · repeatable tables → clean exports",
+      "projectLinks": [
+        {
+          "label": "Book intro call",
+          "href": "https://vahdetlabs.com/contact",
+          "external": true
+        },
+        {
+          "label": "Live Streamlit demo",
+          "href": "https://cleaning-data.vahdetlabs.com/",
+          "external": true
+        },
+        {
+          "label": "VahdetLabs",
+          "href": "https://vahdetlabs.com/",
+          "external": true
+        },
+        {
+          "label": "Source reference (GitHub)",
+          "href": "https://github.com/vahdetkaratas/6_data_cleaning_toolkit",
+          "external": true
+        }
+      ],
+      "reviewLinks": [
+        {
+          "label": "Contact",
+          "href": "https://vahdetlabs.com/contact",
+          "external": true
+        },
+        {
+          "label": "Live Streamlit demo",
+          "href": "https://cleaning-data.vahdetlabs.com/",
+          "external": true
+        },
+        {
+          "label": "VahdetLabs",
+          "href": "https://vahdetlabs.com/",
+          "external": true
+        },
+        {
+          "label": "Reference repository",
+          "href": "https://github.com/vahdetkaratas/6_data_cleaning_toolkit",
+          "external": true
+        }
+      ],
+      "limitations": [
+        "Not SaaS provisioning, not multi-tenant managed MDM catalogs, not magic autonomous AI wiping columns.",
+        "Pilot scope agrees file types, thresholds, allowable drops/fills, and review gates—beyond that needs new scope.",
+        "Large files need sampling or server-side ingestion projects; defaults target practical internal batches.",
+        "English-language UI today; multilingual labels require agreed extensions."
+      ],
+      "relatedMlSystems": [
+        {
+          "label": "Batch scoring",
+          "href": "https://batch-scoring.vahdetlabs.com/",
+          "external": true
+        },
+        {
+          "label": "Feature store",
+          "href": "https://feature-store.vahdetlabs.com/",
+          "external": true
+        },
+        {
+          "label": "Vahdetlabs",
+          "href": "https://vahdetlabs.com/",
+          "external": true
+        },
+        {
+          "label": "Monitoring & data quality",
+          "href": "https://monitoring.vahdetlabs.com/",
+          "external": true
+        },
+        {
+          "label": "Customer churn prediction",
+          "href": "https://churn.vahdetlabs.com/",
+          "external": true
+        }
+      ],
+      "relatedDataTools": [
+        {
+          "label": "Data cleaning toolkit",
+          "href": "https://data-cleaning.vahdetlabs.com/",
+          "external": true
+        },
+        {
+          "label": "EDA report generator",
+          "href": "https://eda-report.vahdetlabs.com/",
+          "external": true
+        },
+        {
+          "label": "Forecasting demo",
+          "href": "https://forecasting.vahdetlabs.com/",
+          "external": true
+        },
+        {
+          "label": "CSV analytics",
+          "href": "https://ai-analysis.vahdetlabs.com/",
+          "external": true
+        },
+        {
+          "label": "KPI dashboard",
+          "href": "https://kpi-dashboard.vahdetlabs.com/",
+          "external": true
+        }
+      ]
+    }
+  }
+}

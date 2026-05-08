@@ -1,0 +1,29 @@
+{
+  "name": "VahdetLabs",
+  "identity": "Data systems delivery — preprocessing for reporting & modeling",
+  "location": "Czech Republic",
+  "portfolioUrl": "https://vahdetlabs.com/",
+  "avatarUrl": "favicon.svg",
+  "technicalFocus": [
+    "Operational CSV & spreadsheet hygiene",
+    "Configurable cleaning before dashboards & models",
+    "Shareable summaries for internal QA",
+    "Explicit scope & guardrails per pilot",
+    "Tooling—not SaaS platform sprawl"
+  ],
+  "reviewSectionTitle": "Discuss a pilot",
+  "footerLabel": "VahdetLabs capability overview",
+  "footerTagline": "Hands-on preprocessing work with written scope boundaries and transferable exports.",
+  "socialLinks": [
+    {
+      "label": "VahdetLabs",
+      "href": "https://vahdetlabs.com/",
+      "iconClass": "fas fa-building"
+    },
+    {
+      "label": "Contact",
+      "href": "https://vahdetlabs.com/contact",
+      "iconClass": "fas fa-envelope"
+    }
+  ]
+}

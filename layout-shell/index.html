@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Streamlit data cleaning toolkit: upload, detect issues, configure cleaning, export CSV/Parquet/JSON and HTML reports. Pandas-first modules with tests.">
+  <meta name="theme-color" content="#0a0c10">
+  <title>Data Cleaning Toolkit — Data Engineering / DQ</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="shell.css">
+  <link rel="stylesheet" href="demo-content.css">
+</head>
+<body>
+  <div class="shell-outer">
+    <div class="shell-card">
+      <div class="art-info-bar">
+        <div class="art-info-bar-frame">
+          <div class="art-info-bar-header">
+            <button type="button" class="art-info-bar-btn" aria-label="Toggle info" aria-expanded="false">
+              <i class="fas fa-ellipsis-v" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <div class="art-header">
+            <div class="art-avatar">
+              <a href="https://vahdetkaratas.com/" class="art-avatar-curtain">
+                <img src="https://vahdetkaratas.com/img/face-1.jpg" alt="Vahdettin Karatas" width="90" height="90">
+                <i class="fas fa-expand" aria-hidden="true"></i>
+              </a>
+              <div class="art-lamp-light">
+                <div class="art-available-lamp"></div>
+              </div>
+            </div>
+            <h5 class="art-name mb-10"><a href="https://vahdetkaratas.com/">Vahdettin Karatas</a></h5>
+            <div class="art-sm-text">Data / ML engineer — preprocessing, validation, repeatable pipelines</div>
+            
+          </div>
+
+          <div id="scrollbar2" class="art-scroll-frame">
+            <div class="art-table p-15-15">
+              <ul>
+                <li><h6>Location:</h6><span>Czech Republic (EU)</span></li>
+              </ul>
+            </div>
+
+            <div class="art-ls-divider"></div>
+
+            <div class="art-knowledge-block p-30-15">
+              <h6 class="mb-15">Technical focus</h6>
+              <ul class="art-knowledge-list p-15-0">
+                <li>Tabular data quality &amp; preprocessing</li>
+<li>Streamlit tooling for DQ reviews</li>
+<li>Python / pandas workloads</li>
+<li>Testing &amp; reproducible notebooks</li>
+<li>Exportable artifacts &amp; honest limits</li>
+              </ul>
+            </div>
+
+            <div class="art-knowledge-block p-30-15">
+              <h6 class="mb-15">Review this artifact</h6>
+              <ul class="art-knowledge-list p-15-0">
+                <li><a href="https://github.com/vahdetkaratas/6_data_cleaning_toolkit" target="_blank" rel="noopener noreferrer">Repository</a></li>
+<li><a href="https://github.com/vahdetkaratas/6_data_cleaning_toolkit/blob/main/README.md#run-tests" target="_blank" rel="noopener noreferrer">Tests (`pytest`)</a></li>
+<li><a href="https://cleaning-data.vahdetkaratas.com/" target="_blank" rel="noopener noreferrer">Streamlit demo</a></li>
+<li><a href="https://vahdetkaratas.com/" target="_blank" rel="noopener noreferrer">Profile / CV</a></li>
+              </ul>
+            </div>
+
+            <div class="art-knowledge-block p-30-15"><h6 class="mb-15">ML systems</h6><ul class="art-knowledge-list p-15-0"><li><a href="https://vahdetkaratas.com/portfolio" target="_blank" rel="noopener noreferrer">Portfolio</a></li>
+<li><a href="https://batch-scoring.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Batch scoring</a></li>
+<li><a href="https://feature-store.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Feature store</a></li>
+<li><a href="https://vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Vahdetlabs</a></li>
+<li><a href="https://monitoring.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Monitoring &amp; data quality</a></li>
+<li><a href="https://churn.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Customer churn prediction</a></li></ul></div><div class="art-knowledge-block p-30-15"><h6 class="mb-15">Data tools</h6><ul class="art-knowledge-list p-15-0"><li><a href="https://data-cleaning.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Data cleaning toolkit</a></li>
+<li><a href="https://eda-report.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">EDA report generator</a></li>
+<li><a href="https://forecasting.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Forecasting demo</a></li>
+<li><a href="https://ai-analysis.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">CSV analytics</a></li>
+<li><a href="https://kpi-dashboard.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">KPI dashboard</a></li></ul></div>
+          </div>
+
+          <div class="art-ls-social">
+            <a href="https://github.com/vahdetkaratas" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+<a href="https://linkedin.com/in/vahdetkaratas" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="shell-main-wrap" id="shellMainWrap">
+        <div class="shell-mobile-curtain" id="shellMobileCurtain" aria-hidden="true"></div>
+        <div class="shell-main">
+          <main class="shell-scroll" id="shellScroll">
+            <div class="shell-content" id="projectContent">
+              <div class="shell-project-page">
+                <a class="skip" href="#main">Skip to content</a>
+
+                <div class="wrap">
+                  <header>
+                    <div class="logo" id="top">Data <span>Cleaning toolkit</span></div>
+                    <div class="nav-actions">
+                      <a class="btn btn-primary" href="https://github.com/vahdetkaratas/6_data_cleaning_toolkit" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>GitHub</a>
+<a class="btn btn-ghost" href="https://cleaning-data.vahdetkaratas.com/" target="_blank" rel="noopener noreferrer">Live Streamlit demo</a>
+<a class="btn btn-ghost" href="https://github.com/vahdetkaratas/6_data_cleaning_toolkit#how-to-run" target="_blank" rel="noopener noreferrer">Run locally</a>
+                    </div>
+                  </header>
+
+                  <div id="main">
+                    <section class="hero">
+                      <span class="hero-badge">Portfolio artifact — Streamlit demo + reproducible preprocessing</span>
+                      <h1>Tabular data quality &amp; preprocessing</h1>
+                      <p class="hero-lead">I ship a practical upload → detect → clean → export loop for messy operational tables: issue detection across missing values, duplicates, parses, categorical drift, and IQR outliers (flagged outlier stats in reporting), plus notebooks that replay the offline path. Exported artifacts plus pytest cover the repeatable core.</p>
+                      <div class="hero-cta">
+                        <a class="btn btn-primary" href="https://github.com/vahdetkaratas/6_data_cleaning_toolkit" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>GitHub</a>
+<a class="btn btn-ghost" href="https://cleaning-data.vahdetkaratas.com/" target="_blank" rel="noopener noreferrer">Live Streamlit demo</a>
+<a class="btn btn-ghost" href="https://github.com/vahdetkaratas/6_data_cleaning_toolkit#how-to-run" target="_blank" rel="noopener noreferrer">Run locally</a>
+                      </div>
+                      <p class="hero-note">Static recruiter page only. Hands-on uploads and downloads use the hosted Streamlit instance linked above.</p>
+                      <div class="metrics" aria-label="Project facts">
+                        <div><span>Python / pandas</span></div>
+<div><span>Streamlit</span></div>
+<div><span>CSV · Excel · Parquet · JSON</span></div>
+<div><span>pytest</span></div>
+                      </div>
+                    </section>
+
+                    <section id="scope" aria-labelledby="h-scope"><h2 id="h-scope">Limitations &amp; scope</h2><div class="pitch"><ul><li>Demo safeguards cap uploads (~25 MB) — not unmanaged enterprise ingest.</li>
+<li>Guidance warns above ~100k rows; brute-force gigantic tables will hit memory/time limits.</li>
+<li>No hosted REST layer in this repo: Streamlit UX + downloadable outputs + offline notebooks.</li>
+<li>Heuristic DQ helpers — not lineage, MDM catalogs, contracts-as-a-service platforms, or SLA-driven ETL control planes.</li></ul></div></section>
+
+                    <section class="proj-prose">
+  <p><strong>Motivation.</strong> Tabular extracts from ERPs, finance exports, and support CSVs routinely mix missing fields, bogus dates, drifting category strings, duplicated keys, and half-parsed numeric text. Analysts rework the same transformations by hand—the goal here is deterministic, repeatable cleaning with receipts.</p>
+  <p>This repository pairs a Streamlit reviewer with reusable Python helpers so the same transformations can ship in demos, notebooks, or future automation without copying ad hoc notebook cells everywhere.</p>
+</section>
+
+<div class="pipeline-wrap" aria-labelledby="pipeline-heading">
+  <h2 id="pipeline-heading">End-to-end flow</h2>
+  <ol class="pipeline" role="list">
+    <li class="pipe-step">
+      <span class="step-label">01</span>
+      <span class="step-name">Load &amp; merge</span>
+    </li>
+    <li class="pipe-step">
+      <span class="step-label">02</span>
+      <span class="step-name">Detect issues</span>
+    </li>
+    <li class="pipe-step">
+      <span class="step-label">03</span>
+      <span class="step-name">Configure fixes</span>
+    </li>
+    <li class="pipe-step">
+      <span class="step-label">04</span>
+      <span class="step-name">Clean &amp; audit</span>
+    </li>
+    <li class="pipe-step">
+      <span class="step-label">05</span>
+      <span class="step-name">Export data + HTML report</span>
+    </li>
+  </ol>
+</div>
+
+<section class="proj-section">
+  <h2>What the codebase contains</h2>
+  <div class="proj-arch-visual" aria-label="Architecture layers">
+    <span class="proj-arch-node">src/load.py</span>
+    <span class="proj-arch-arrow">→</span>
+    <span class="proj-arch-node">src/detect.py</span>
+    <span class="proj-arch-arrow">→</span>
+    <span class="proj-arch-node">src/clean.py</span>
+    <span class="proj-arch-arrow">→</span>
+    <span class="proj-arch-node">src/report.py</span>
+  </div>
+  <p class="proj-arch-caption">Streamlit stitches the modules together; notebooks duplicate the offline path.</p>
+
+  <div class="proj-card-grid">
+    <article class="proj-card">
+      <h3 class="proj-card-title">Streamlit façade</h3>
+      <p>Provides upload or bundled messy demos, sliders for thresholds, deterministic cleaning toggles, previews, downloadable cleaned files, and the HTML artifact.</p>
+    </article>
+    <article class="proj-card">
+      <h3 class="proj-card-title">Detection</h3>
+      <p>Merges uploads, summarizes missing ratios, parses invalid formats, spots inconsistent categorical tokens, evaluates duplicate subsets (optional key columns), and surfaces IQR outlier counts in reporting without silent auto-removal.</p>
+    </article>
+    <article class="proj-card">
+      <h3 class="proj-card-title">Cleaning primitives</h3>
+      <p>Configurable duplication removal, categorical normalization (case / whitespace trims), numeric coercion, date parsing, and explicit missing-row strategies (leave, drop-with-warning, deterministic fill).</p>
+    </article>
+    <article class="proj-card">
+      <h3 class="proj-card-title">Report bytes</h3>
+      <p>HTML summaries mirror Streamlit-visible tables—useful attachments for reviews or ticketing without forcing stakeholders into the IDE.</p>
+    </article>
+  </div>
+</section>
+
+<section class="proj-section">
+  <h2>Operational walkthrough</h2>
+  <ol class="proj-steps">
+    <li class="proj-step">
+      <div class="proj-step-num" aria-hidden="true">1</div>
+      <div class="proj-step-body">
+        <h3 class="proj-step-title">Ingress</h3>
+        <p>Upload CSV, Excel, Parquet, or shallow JSON structures (single-level flatten); optionally merge multiples with provenance tagging.</p>
+      </div>
+    </li>
+    <li class="proj-step">
+      <div class="proj-step-num" aria-hidden="true">2</div>
+      <div class="proj-step-body">
+        <h3 class="proj-step-title">Detection pass</h3>
+        <p>Column insight matrix plus aggregate issue summaries; “detect-only” mode previews without mutating downstream assets.</p>
+      </div>
+    </li>
+    <li class="proj-step">
+      <div class="proj-step-num" aria-hidden="true">3</div>
+      <div class="proj-step-body">
+        <h3 class="proj-step-title">Configurable cleaning run</h3>
+        <p>Explicit checklist of transformations with honest guardrails surfaced in README (row caps, demo upload MB limit).</p>
+      </div>
+    </li>
+    <li class="proj-step">
+      <div class="proj-step-num" aria-hidden="true">4</div>
+      <div class="proj-step-body">
+        <h3 class="proj-step-title">Verification artifacts</h3>
+        <p>Before / after previews, trimmed change samples, deterministic summary bullets, zipped exports (CSV · Parquet · JSON) aligned with QA expectations.</p>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<section class="proj-section">
+  <h2>Reproducibility &amp; assurance</h2>
+  <ul class="proj-tech-list">
+    <li><strong>pytest</strong> exercises loader edge cases plus detect/clean invariants referenced in README.</li>
+    <li><strong>Notebooks</strong> regenerate demo CSV noise and rerun the analytical path without Streamlit—for pair reviews or onboarding.</li>
+    <li><strong>Transparency:</strong> every cleaning action maps to textual descriptions surfaced in-session for audit trails.</li>
+  </ul>
+</section>
+
+<section class="proj-section">
+  <h2>Transparent limits</h2>
+  <div class="pitch">
+    <ul>
+      <li>This is practical engineering hygiene—not a silver bullet “AI cleaner” SaaS abstraction.</li>
+      <li>Browser-oriented Streamlit safeguards reject multi-hundred-megabyte blobs; ingest-hardened services need separate scope.</li>
+      <li>No workflow scheduler, SLA manager, semantic master-data graph, or auto-discovered ontology engine lives here.</li>
+    </ul>
+  </div>
+</section>
+
+                  </div>
+
+                  <footer class="shell-project-footer">
+                    <p class="name">Data Cleaning Toolkit</p>
+                    <p style="margin:0.35rem 0 0;font-size:0.76rem;">Proof-of-work · Streamlit demo + modular Python</p>
+                  </footer>
+                </div>
+              </div>
+            </div>
+
+            <div class="container-fluid p-30-0">
+              <footer class="footer">
+                <div class="art-copy">© <span id="shellYear"></span> Vahdettin Karatas. All rights reserved.</div>
+                <div class="footer-developer">Reproducible cleaning modules, surfaced through Streamlit demos and notebooks.</div>
+              </footer>
+            </div>
+          </main>
+        </div>
+
+        <aside class="shell-rail" aria-label="Home">
+          <div class="shell-rail-header">
+            <a class="shell-rail-home" href="https://vahdetkaratas.com/" id="shellHomeLink" title="Site home" aria-label="Site home">
+              <svg viewBox="0 0 24 24" aria-hidden="true" class="shell-rail-home-icon">
+                <path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="shell-rail-spacer" aria-hidden="true"></div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <script src="shell.js"></script>
+</body>
+</html>

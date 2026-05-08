@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Streamlit data cleaning toolkit: upload, detect issues, configure cleaning, export CSV/Parquet/JSON and HTML reports. Pandas-first modules with tests.">
+  <meta name="theme-color" content="#0a0c10">
+  <title>Operational table cleanup — repeatable preprocessing</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="shell.css">
+  <link rel="stylesheet" href="demo-content.css">
+</head>
+<body>
+  <div class="shell-outer">
+    <div class="shell-card">
+      <div class="art-info-bar">
+        <div class="art-info-bar-frame">
+          <div class="art-info-bar-header">
+            <button type="button" class="art-info-bar-btn" aria-label="Toggle info" aria-expanded="false">
+              <i class="fas fa-ellipsis-v" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <div class="art-header">
+            <div class="art-avatar">
+              <a href="https://vahdetlabs.com/" class="art-avatar-curtain">
+                <img src="favicon.svg" alt="VahdetLabs" width="90" height="90">
+                <i class="fas fa-expand" aria-hidden="true"></i>
+              </a>
+              <div class="art-lamp-light">
+                <div class="art-available-lamp"></div>
+              </div>
+            </div>
+            <h5 class="art-name mb-10"><a href="https://vahdetlabs.com/">VahdetLabs</a></h5>
+            <div class="art-sm-text">Data systems delivery — preprocessing for reporting &amp; modeling</div>
+            
+          </div>
+
+          <div id="scrollbar2" class="art-scroll-frame">
+            <div class="art-table p-15-15">
+              <ul>
+                <li><h6>Location:</h6><span>Czech Republic</span></li>
+              </ul>
+            </div>
+
+            <div class="art-ls-divider"></div>
+
+            <div class="art-knowledge-block p-30-15">
+              <h6 class="mb-15">Technical focus</h6>
+              <ul class="art-knowledge-list p-15-0">
+                <li>Operational CSV &amp; spreadsheet hygiene</li>
+<li>Configurable cleaning before dashboards &amp; models</li>
+<li>Shareable summaries for internal QA</li>
+<li>Explicit scope &amp; guardrails per pilot</li>
+<li>Tooling—not SaaS platform sprawl</li>
+              </ul>
+            </div>
+
+            <div class="art-knowledge-block p-30-15">
+              <h6 class="mb-15">Discuss a pilot</h6>
+              <ul class="art-knowledge-list p-15-0">
+                <li><a href="https://vahdetlabs.com/contact" target="_blank" rel="noopener noreferrer">Contact</a></li>
+<li><a href="https://cleaning-data.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Live Streamlit demo</a></li>
+<li><a href="https://vahdetlabs.com/" target="_blank" rel="noopener noreferrer">VahdetLabs</a></li>
+<li><a href="https://github.com/vahdetkaratas/6_data_cleaning_toolkit" target="_blank" rel="noopener noreferrer">Reference repository</a></li>
+              </ul>
+            </div>
+
+            <div class="art-knowledge-block p-30-15"><h6 class="mb-15">ML systems</h6><ul class="art-knowledge-list p-15-0"><li><a href="https://batch-scoring.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Batch scoring</a></li>
+<li><a href="https://feature-store.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Feature store</a></li>
+<li><a href="https://vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Vahdetlabs</a></li>
+<li><a href="https://monitoring.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Monitoring &amp; data quality</a></li>
+<li><a href="https://churn.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Customer churn prediction</a></li></ul></div><div class="art-knowledge-block p-30-15"><h6 class="mb-15">Data tools</h6><ul class="art-knowledge-list p-15-0"><li><a href="https://data-cleaning.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Data cleaning toolkit</a></li>
+<li><a href="https://eda-report.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">EDA report generator</a></li>
+<li><a href="https://forecasting.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Forecasting demo</a></li>
+<li><a href="https://ai-analysis.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">CSV analytics</a></li>
+<li><a href="https://kpi-dashboard.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">KPI dashboard</a></li></ul></div>
+          </div>
+
+          <div class="art-ls-social">
+            <a href="https://vahdetlabs.com/" target="_blank" rel="noopener noreferrer" title="VahdetLabs" aria-label="VahdetLabs"><i class="fas fa-building" aria-hidden="true"></i></a>
+<a href="https://vahdetlabs.com/contact" target="_blank" rel="noopener noreferrer" title="Contact" aria-label="Contact"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="shell-main-wrap" id="shellMainWrap">
+        <div class="shell-mobile-curtain" id="shellMobileCurtain" aria-hidden="true"></div>
+        <div class="shell-main">
+          <main class="shell-scroll" id="shellScroll">
+            <div class="shell-content" id="projectContent">
+              <div class="shell-project-page">
+                <a class="skip" href="#main">Skip to content</a>
+
+                <div class="wrap">
+                  <header>
+                    <div class="logo" id="top">Data <span>Cleaning toolkit</span></div>
+                    <div class="nav-actions">
+                      <a class="btn btn-primary" href="https://vahdetlabs.com/contact" target="_blank" rel="noopener noreferrer">Book intro call</a>
+<a class="btn btn-ghost" href="https://cleaning-data.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Live Streamlit demo</a>
+<a class="btn btn-ghost" href="https://vahdetlabs.com/" target="_blank" rel="noopener noreferrer">VahdetLabs</a>
+<a class="btn btn-ghost" href="https://github.com/vahdetkaratas/6_data_cleaning_toolkit" target="_blank" rel="noopener noreferrer">Source reference (GitHub)</a>
+                    </div>
+                  </header>
+
+                  <div id="main">
+                    <section class="hero">
+                      <span class="hero-badge">Capability overview — spreadsheets &amp; CSV workflows</span>
+                      <h1>Tabular data quality &amp; preprocessing</h1>
+                      <p class="hero-lead">Teams waste hours normalizing sloppy exports before reporting or downstream models. A scoped preprocessing pass standardizes parses, trims duplicate rows, aligns categories where configured, prepares date/numeric coercion, fills or drops missing values per agreed rules, and outputs files plus a shareable HTML run summary—ideal for pilots and internal tooling, not turnkey SaaS.</p>
+                      <div class="hero-cta">
+                        <a class="btn btn-primary" href="https://vahdetlabs.com/contact" target="_blank" rel="noopener noreferrer">Book intro call</a>
+<a class="btn btn-ghost" href="https://cleaning-data.vahdetlabs.com/" target="_blank" rel="noopener noreferrer">Live Streamlit demo</a>
+<a class="btn btn-ghost" href="https://vahdetlabs.com/" target="_blank" rel="noopener noreferrer">VahdetLabs</a>
+<a class="btn btn-ghost" href="https://github.com/vahdetkaratas/6_data_cleaning_toolkit" target="_blank" rel="noopener noreferrer">Source reference (GitHub)</a>
+                      </div>
+                      <p class="hero-note">Static overview only. Use the Live Streamlit demo button for the labs-hosted sandbox.</p>
+                      <div class="metrics" aria-label="Project facts">
+                        <div><span>Python / pandas</span></div>
+<div><span>Streamlit</span></div>
+<div><span>CSV · Excel · Parquet · JSON</span></div>
+<div><span>pytest</span></div>
+                      </div>
+                    </section>
+
+                    <section id="scope" aria-labelledby="h-scope"><h2 id="h-scope">Limitations &amp; scope</h2><div class="pitch"><ul><li>Not SaaS provisioning, not multi-tenant managed MDM catalogs, not magic autonomous AI wiping columns.</li>
+<li>Pilot scope agrees file types, thresholds, allowable drops/fills, and review gates—beyond that needs new scope.</li>
+<li>Large files need sampling or server-side ingestion projects; defaults target practical internal batches.</li>
+<li>English-language UI today; multilingual labels require agreed extensions.</li></ul></div></section>
+
+                    <section class="proj-prose">
+  <p><strong>Operational pain.</strong> Finance, RevOps, and CS teams routinely export spreadsheets and CSV snapshots that contradict each other: duplicated customer rows, collapsing date formats, free-text regions masquerading as categories, blanks where ERP rules expect numbers. Manual cleanup slows reporting cycles and hides mistakes until dashboards look “off.”</p>
+  <p>VahdetLabs scopes short preprocessing pilots that bring those exports to a repeatable baseline before BI refreshes or internal tooling handoffs—not a flashy SaaS promise, just disciplined tables.</p>
+</section>
+
+<section class="proj-section">
+  <h2>What a pilot produces</h2>
+  <div class="proj-card-grid">
+    <article class="proj-card">
+      <h3 class="proj-card-title">Agreed cleansing recipe</h3>
+      <p>Column-level allowances for trims, coercion, duplicate handling, and missing-value policy recorded up front.</p>
+    </article>
+    <article class="proj-card">
+      <h3 class="proj-card-title">Handoff-ready files</h3>
+      <p>CSV / Parquet / JSON exports whichever downstream stack prefers—with identical transforms each run.</p>
+    </article>
+    <article class="proj-card">
+      <h3 class="proj-card-title">HTML run summary</h3>
+      <p>Sharable synopsis of counts, deltas, warnings—anchors internal reviews without unlocking production databases.</p>
+    </article>
+    <article class="proj-card">
+      <h3 class="proj-card-title">Scope boundaries</h3>
+      <p>Explicit what is in/out—no stealth expansion into unmanaged MDM catalogs or enterprise workflow orchestrators without renegotiating.</p>
+    </article>
+  </div>
+</section>
+
+<section class="proj-section">
+  <h2>Standardization scope</h2>
+  <ol class="proj-steps">
+    <li class="proj-step">
+      <div class="proj-step-num" aria-hidden="true">1</div>
+      <div class="proj-step-body">
+        <h3 class="proj-step-title">Structure &amp; duplicates</h3>
+        <p>Optional business keys constrain duplicate scans; merges from multiple uploads keep provenance for reconciliation.</p>
+      </div>
+    </li>
+    <li class="proj-step">
+      <div class="proj-step-num" aria-hidden="true">2</div>
+      <div class="proj-step-body">
+        <h3 class="proj-step-title">Types &amp; formats</h3>
+        <p>Dates and numerics coerce only when instructed; outliers surface as warnings—not silent deletions unless that rule is negotiated.</p>
+      </div>
+    </li>
+    <li class="proj-step">
+      <div class="proj-step-num" aria-hidden="true">3</div>
+      <div class="proj-step-body">
+        <h3 class="proj-step-title">Categories &amp; whitespace</h3>
+        <p>Case normalization and trimming eliminate “West ” vs “west” drift feeding regional charts.</p>
+      </div>
+    </li>
+    <li class="proj-step">
+      <div class="proj-step-num" aria-hidden="true">4</div>
+      <div class="proj-step-body">
+        <h3 class="proj-step-title">Missing data policy</h3>
+        <p>Stakeholders choose between leaving gaps, pruning rows with explicit rationale, or filling with audited constants tied to KPI definitions.</p>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<section class="proj-section">
+  <h2>Collaboration rhythm</h2>
+  <div class="pitch">
+    <ul>
+      <li><strong>Discover:</strong> sample files + KPI intent + risk notes (regulated fields stay client-side).</li>
+      <li><strong>Prototype:</strong> show detection output, reconcile edge cases together, freeze the cleansing checklist.</li>
+      <li><strong>Operationalize:</strong> deliver repeatable exports plus summary HTML; train owners on rerunning or scheduling follow-on work separately.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="proj-section">
+  <h2>Commercial guardrails</h2>
+  <div class="pitch">
+    <ul>
+      <li>Not an always-on multitenant SaaS SKU—pilots intentionally bound time, datasets, environments.</li>
+      <li>Not an enterprise master-data catalogue; semantic merges across unrelated systems belong to larger programs.</li>
+      <li>Large-file ingestion, VPC placement, SSO, ticketing hooks are follow-on scopes once table discipline proves value.</li>
+    </ul>
+  </div>
+</section>
+
+                  </div>
+
+                  <footer class="shell-project-footer">
+                    <p class="name">Data Cleaning Toolkit</p>
+                    <p style="margin:0.35rem 0 0;font-size:0.76rem;">Client overview · repeatable tables → clean exports</p>
+                  </footer>
+                </div>
+              </div>
+            </div>
+
+            <div class="container-fluid p-30-0">
+              <footer class="footer">
+                <div class="art-copy">© <span id="shellYear"></span> VahdetLabs. All rights reserved.</div>
+                <div class="footer-developer">Hands-on preprocessing work with written scope boundaries and transferable exports.</div>
+              </footer>
+            </div>
+          </main>
+        </div>
+
+        <aside class="shell-rail" aria-label="Home">
+          <div class="shell-rail-header">
+            <a class="shell-rail-home" href="https://vahdetlabs.com/" id="shellHomeLink" title="Site home" aria-label="Site home">
+              <svg viewBox="0 0 24 24" aria-hidden="true" class="shell-rail-home-icon">
+                <path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="shell-rail-spacer" aria-hidden="true"></div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <script src="shell.js"></script>
+</body>
+</html>
