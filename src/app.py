@@ -1,6 +1,13 @@
 import io
 import logging
+import sys
 from pathlib import Path
+
+# Repo root on sys.path — required when Streamlit sets cwd/script path so
+# `from src...` resolves (VPS, Docker, systemd, or running from another directory).
+_ROOT = Path(__file__).resolve().parent.parent
+if str(_ROOT) not in sys.path:
+    sys.path.insert(0, str(_ROOT))
 
 import pandas as pd
 import streamlit as st
